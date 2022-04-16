@@ -1,5 +1,6 @@
 # Trang web môi giới việc làm
 ## _Dự án vì cộng đồng_
+[![Sơ đồ thực thể](https://app.diagrams.net/images/favicon-32x32.png)](https://drive.google.com/file/d/1CIiWkZ25f-Pu1gYtNiLrdV2dG-IGLmrI/view?usp=sharing)
 
 ### Đối tượng sử dụng
 - Quản trị viên
