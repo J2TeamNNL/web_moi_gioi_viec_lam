@@ -33,7 +33,7 @@ C. Ứng viên
 | ------ | ------ |
 | Mô tả | Đăng bài tuyển dụng |
 | Kích hoạt | Người dùng ấn vào nút “Đăng bài tuyển dụng” trên thanh menu |
-| Đầu vào | Tên công ty<br>Tên công việc |
+| Đầu vào | Tên công ty<br>Tên công việc<br>Địa điểm: thành phố - quận (select2 - load về local)<br>Có cho remote không? (radio)<br>Có cho part time không? (radio)<br>Mức lương (slidebar)<br>Ngôn ngữ (multiple select2)<br>Yêu cầu thêm (textarea)<br>Thời gian<br>Số lượng<br>File JD |
 
 
 ## License
