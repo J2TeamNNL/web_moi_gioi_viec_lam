@@ -1,7 +1,7 @@
 # Trang web môi giới việc làm
 ## _Dự án vì cộng đồng_
 [![Sơ đồ thực thể](https://app.diagrams.net/images/favicon-32x32.png)](https://drive.google.com/file/d/1CIiWkZ25f-Pu1gYtNiLrdV2dG-IGLmrI/view?usp=sharing)
-[![Cơ sở dữ liệu](https://ssl.gstatic.com/docs/spreadsheets/favicon3.ico)](https://docs.google.com/spreadsheets/d/1k0TEgq5_6LldRxVwSTqpFD4Nd6u8_f6bzy8TnV7oOPo/edit?usp=sharing)
+[![Cơ sở dữ liệu](https://i.ibb.co/S7KTZxP/google-sheets-1.png)](https://docs.google.com/spreadsheets/d/1k0TEgq5_6LldRxVwSTqpFD4Nd6u8_f6bzy8TnV7oOPo/edit?usp=sharing)
 
 ### Đối tượng sử dụng
 - Quản trị viên
