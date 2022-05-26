@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -15,8 +16,18 @@ class PostController extends Controller
         $this->model = Post::query();
     }
 
-    public function index(): LengthAwarePaginator
+    public function index(): JsonResponse
     {
-        return $this->model->paginate();
+        $data = $this->model->paginate();
+        foreach ($data as $each) {
+            $each->currency_salary = $each->currency_salary_code;
+            $each->status          = $each->status_name;
+        }
+
+        return response()->json([
+            'success'    => true,
+            'data'       => $data->getCollection(),
+            'pagination' => $data->linkCollection()
+        ]);
     }
 }
