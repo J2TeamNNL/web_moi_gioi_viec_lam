@@ -31,8 +31,7 @@ class PostController extends Controller
 
     public function create()
     {
-        $companies = Company::query()->get();
-        return view('admin.posts.index');
+        return view('admin.posts.create');
     }
 
     public function importCsv(Request $request)

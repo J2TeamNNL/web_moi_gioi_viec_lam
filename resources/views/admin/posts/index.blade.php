@@ -49,7 +49,7 @@
                 dataType: 'json',
                 data: {page: {{ request()->get('page') ?? 1 }} },
                 success: function (response) {
-                    response.data.forEach(function (each) {
+                    response.data.data.forEach(function (each) {
                         let location = each.district + ' - ' + each.city;
                         let remotable = each.remotable ? 'x' : '';
                         let is_partime = each.is_partime ? 'x' : '';
@@ -70,10 +70,16 @@
                             .append($('<td>').append(created_at))
                         );
                     });
-                    renderPagination(response.pagination);
+                    renderPagination(response.data.pagination);
                 },
                 error: function (response) {
-
+                    $.toast({
+                        heading: 'Import Error',
+                        text: response.responseJSON.message,
+                        showHideTransition: 'slide',
+                        position: 'bottom-right',
+                        icon: 'error'
+                    })
                 }
             })
 
