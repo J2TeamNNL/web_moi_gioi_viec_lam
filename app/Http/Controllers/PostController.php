@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Post\CheckSlugRequest;
+use App\Http\Requests\Post\GenerateSlugRequest;
 use App\Models\Post;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Throwable;
 
 class PostController extends Controller
 {
@@ -31,5 +35,22 @@ class PostController extends Controller
         $arr['pagination'] = $data->linkCollection();
 
         return $this->successResponse($arr);
+    }
+
+    public function generateSlug(GenerateSlugRequest $request): JsonResponse
+    {
+        try {
+            $title = $request->get('title');
+            $slug  = SlugService::createSlug(Post::class, 'slug', $title);
+
+            return $this->successResponse($slug);
+        } catch (Throwable $e) {
+            return $this->errorResponse();
+        }
+    }
+
+    public function checkSlug(CheckSlugRequest $request): JsonResponse
+    {
+        return $this->successResponse();
     }
 }

@@ -49,4 +49,11 @@ class Post extends Model
     {
         return PostStatusEnum::getKey($this->status);
     }
+
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
+    }
 }

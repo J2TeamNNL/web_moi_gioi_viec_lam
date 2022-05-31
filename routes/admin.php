@@ -22,5 +22,6 @@ Route::group([
 ], static function () {
     Route::get('/', [PostController::class, 'index'])->name('index');
     Route::get('/create', [PostController::class, 'create'])->name('create');
+    Route::post('/store', [PostController::class, 'store'])->name('store');
     Route::post('/import-csv', [PostController::class, 'importCsv'])->name('import_csv');
 });
