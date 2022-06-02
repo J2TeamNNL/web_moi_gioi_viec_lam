@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\PostCurrencySalaryEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ResponseTrait;
+use App\Http\Requests\Post\StoreRequest;
 use App\Imports\PostImport;
 use App\Models\Company;
 use App\Models\Post;
@@ -54,7 +55,7 @@ class PostController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         return $request->all();
     }
