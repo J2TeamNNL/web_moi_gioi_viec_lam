@@ -50,7 +50,16 @@ return [
         'admin' => [
             'driver' => 'session',
             'provider' => 'users',
-            'hash' => true,
+        ],
+
+        'applicant' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+
+        'hr' => [
+            'driver' => 'session',
+            'provider' => 'users',
         ],
     ],
 
@@ -76,11 +85,6 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     /*

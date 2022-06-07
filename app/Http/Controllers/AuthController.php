@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\UserRoleEnum;
 use App\Http\Requests\Auth\RegisteringRequest;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -22,7 +23,7 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-    public function callback($provider)
+    public function callback($provider): RedirectResponse
     {
         $data = Socialite::driver($provider)->user();
 
@@ -39,13 +40,11 @@ class AuthController extends Controller
 
         $user->name   = $data->getName();
         $user->avatar = $data->getAvatar();
+        $user->role   = UserRoleEnum::ADMIN;
         $user->save();
 
         $role = strtolower(UserRoleEnum::getKeys($user->role)[0]);
-        Auth::guard($role)->attempt([
-            'email' => $user->email,
-            'password' => $user->password,
-        ]);
+        Auth::guard($role)->login($user, true);
 
         if ($checkExist) {
             return redirect()->route("$role.welcome");

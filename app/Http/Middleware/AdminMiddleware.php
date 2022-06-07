@@ -2,35 +2,20 @@
 
 namespace App\Http\Middleware;
 
+use App\Providers\RouteServiceProvider;
 use Closure;
-use Illuminate\Contracts\Auth\Factory as AuthFactory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminMiddleware
 {
-
-    /**
-     * The guard factory instance.
-     *
-     * @var \Illuminate\Contracts\Auth\Factory
-     */
-    protected $auth;
-
-    /**
-     * Create a new middleware instance.
-     *
-     * @param  \Illuminate\Contracts\Auth\Factory  $auth
-     * @return void
-     */
-    public function __construct(AuthFactory $auth)
+    public function handle(Request $request, Closure $next)
     {
-        $this->auth = $auth;
-    }
-
-    public function handle($request, Closure $next, $guard = null, $field = null)
-    {
-        dd($this->auth);
-        $this->auth->guard($guard);
+        if (!Auth::guard('admin')->check()) {
+            dd(1);
+            return redirect()->route('login');
+        }
+        dd(2);
 
         return $next($request);
     }
