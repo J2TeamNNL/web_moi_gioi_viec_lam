@@ -21,7 +21,7 @@ class StoreRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'language'          => [
+            'languages'         => [
                 'required',
                 'array',
                 'filled',
@@ -45,6 +45,13 @@ class StoreRequest extends FormRequest
                 'numeric',
                 'min:1',
             ],
+            'remotables'        => [
+                'required',
+                'array',
+            ],
+            'is_parttime'       => [
+                'nullable',
+            ],
             'start_date'        => [
                 'nullable',
                 'date',
@@ -55,7 +62,7 @@ class StoreRequest extends FormRequest
                 'date',
                 'after:start_date',
             ],
-            'title'             => [
+            'job_title'         => [
                 'required',
                 'string',
                 'filled',
@@ -71,7 +78,7 @@ class StoreRequest extends FormRequest
                 Rule::unique(Post::class),
             ],
         ];
-        
+
         $rules['min_salary'] = [
             'nullable',
             'numeric',

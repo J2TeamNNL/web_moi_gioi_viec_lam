@@ -22,7 +22,11 @@ class LanguageController extends Controller
     {
         $configs = SystemConfigController::getAndCache();
         $data    = $configs['languages']->filter(function ($each) use ($request) {
-            return Str::contains(strtolower($each['name']), $request->get('q'));
+            if ($request->has('q')) {
+                return Str::contains(strtolower($each['name']), $request->get('q'));
+            }
+
+            return true;
         });
 
         return $this->successResponse($data);

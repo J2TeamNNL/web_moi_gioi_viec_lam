@@ -18,6 +18,19 @@ class Post extends Model
         'job_title',
         'city',
         'status',
+        "district",
+        "remotable",
+        "can_parttime",
+        "min_salary",
+        "max_salary",
+        "currency_salary",
+        "requirement",
+        "start_date",
+        "end_date",
+        "number_applicants",
+        "status",
+        "is_pinned",
+        "slug",
     ];
     // protected $appends = [
     //     'currency_salary_code',
@@ -28,6 +41,7 @@ class Post extends Model
         static::creating(static function ($object) {
             // $object->user_id = auth()->id();
             $object->user_id = 1;
+            $object->status = 1;
         });
     }
 
@@ -48,12 +62,5 @@ class Post extends Model
     public function getStatusNameAttribute(): string
     {
         return PostStatusEnum::getKey($this->status);
-    }
-
-    public function getSlugOptions() : SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug');
     }
 }

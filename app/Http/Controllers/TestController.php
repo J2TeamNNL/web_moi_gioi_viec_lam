@@ -31,20 +31,12 @@ class TestController extends Controller
 
     public function test()
     {
-        $table2 = Discount::query()
-            ->select('product_id')
-            ->selectRaw('MAX(discount_price) AS max_discount')
-            ->join('discount_product', 'discount_product.discount_id', 'discount.id')
-            ->groupBy('product_id');
+        $columns = array();
+        foreach(\DB::select("SHOW COLUMNS FROM posts") as $column)
+        {
+            $columns[] = $column->Field;
+        }
 
-        $data = Product::query()
-            ->addSelect('product.*')
-            ->addSelect('d.max_discount')
-            ->leftJoinSub($table2, 'd', function($join){
-                $join->on('d.product_id', 'product.product_id');
-            })
-            ->get();
-
-        return $data;
+        return $columns;
     }
 }
