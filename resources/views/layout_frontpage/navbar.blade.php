@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top navbar-color-on-scroll navbar-transparent" color-on-scroll="100" id="sectionsNav">
+<nav class="navbar navbar-default navbar-fixed-top navbar-color-on-scroll" color-on-scroll="100" id="sectionsNav">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -71,63 +71,18 @@
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="material-icons">view_carousel</i> Examples
+                        <i class="material-icons">flag</i> Languages
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu dropdown-with-icons">
                         <li>
-                            <a href="../examples/about-us.html">
-                                <i class="material-icons">account_balance</i> About Us
+                            <a href="{{ route('language', 'en') }}">
+                                <img src="{{ asset('flag/us.svg') }}" alt="user-image" class="mr-1" height="12">
+                                <span class="align-middle">English</span>
                             </a>
-                        </li>
-                        <li>
-                            <a href="../examples/blog-post.html">
-                                <i class="material-icons">art_track</i> Blog Post
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../examples/blog-posts.html">
-                                <i class="material-icons">view_quilt</i> Blog Posts
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../examples/contact-us.html">
-                                <i class="material-icons">location_on</i> Contact Us
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../examples/landing-page.html">
-                                <i class="material-icons">view_day</i> Landing Page
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../examples/login-page.html">
-                                <i class="material-icons">fingerprint</i> Login Page
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../examples/pricing.html">
-                                <i class="material-icons">attach_money</i> Pricing Page
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../examples/ecommerce.html">
-                                <i class="material-icons">shop</i> Ecommerce Page
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../examples/product-page.html">
-                                <i class="material-icons">beach_access</i> Product Page
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../examples/profile-page.html">
-                                <i class="material-icons">account_circle</i> Profile Page
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../examples/signup-page.html">
-                                <i class="material-icons">person_add</i> Signup Page
+                            <a href="{{ route('language', 'vi') }}">
+                                <img src="{{ asset('flag/vn.svg') }}" alt="user-image" class="mr-1" height="12">
+                                <span class="align-middle">Tiếng Việt</span>
                             </a>
                         </li>
                     </ul>

@@ -25,8 +25,6 @@
                     <img src="" alt="user-image" class="mr-1" height="12">
                     <span class="align-middle">Tiếng Việt</span>
                 </a>
-
-
             </div>
         </li>
 

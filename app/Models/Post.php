@@ -8,6 +8,8 @@ use App\Enums\PostStatusEnum;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Post extends Model
 {
@@ -65,7 +67,16 @@ class Post extends Model
         return PostStatusEnum::getKey($this->status);
     }
 
-    public function languages()
+    public function getLocationAttribute(): string
+    {
+        if(!empty($this->district)){
+            return $this->district . ' - ' . $this->city;
+        }
+
+        return $this->city;
+    }
+
+    public function languages(): MorphToMany
     {
         return $this->morphToMany(
             Language::class,
@@ -74,5 +85,10 @@ class Post extends Model
             'object_id',
             'language_id',
         );
+    }
+
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
     }
 }
