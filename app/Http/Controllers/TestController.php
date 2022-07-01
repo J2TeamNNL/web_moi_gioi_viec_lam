@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\FileTypeEnum;
 use App\Enums\PostStatusEnum;
+use App\Enums\UserRoleEnum;
 use App\Models\Company;
 use App\Models\Discount;
 use App\Models\File;
@@ -31,12 +32,6 @@ class TestController extends Controller
 
     public function test()
     {
-        $columns = array();
-        foreach(\DB::select("SHOW COLUMNS FROM posts") as $column)
-        {
-            $columns[] = $column->Field;
-        }
-
-        return $columns;
+        return user()->id;
     }
 }
