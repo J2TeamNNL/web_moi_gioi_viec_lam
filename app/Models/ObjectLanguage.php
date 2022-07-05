@@ -13,6 +13,6 @@ class ObjectLanguage extends Model
     protected $fillable = [
         'object_id',
         'language_id',
-        'type',
+        'object_type',
     ];
 }
