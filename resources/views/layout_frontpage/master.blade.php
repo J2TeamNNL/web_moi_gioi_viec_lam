@@ -59,25 +59,30 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        var slider2 = document.getElementById('sliderRefine');
+        const slider2 = document.getElementById('sliderRefine');
+
+        const minSalary = parseInt($("#input-min-salary").val());
+        const maxSalary = parseInt($("#input-max-salary").val());
 
         noUiSlider.create(slider2, {
-            start: [42, 880],
+            start: [minSalary, maxSalary],
             connect: true,
+            step: 50,
             range: {
-                'min': [30],
-                'max': [900]
+                'min': [{{ $configs['filter_min_salary'] }} - 100],
+                'max': [{{ $configs['filter_max_salary'] }} + 500]
             }
         });
 
-        var limitFieldMin = document.getElementById('price-left');
-        var limitFieldMax = document.getElementById('price-right');
-
+        let val;
         slider2.noUiSlider.on('update', function (values, handle) {
+            val = Math.round(values[handle]);
             if (handle) {
-                limitFieldMax.innerHTML = $('#price-right').data('currency') + Math.round(values[handle]);
+                $('#span-max-salary').text(val);
+                $('#input-max-salary').val(val);
             } else {
-                limitFieldMin.innerHTML = $('#price-left').data('currency') + Math.round(values[handle]);
+                $('#span-min-salary').text(val);
+                $('#input-min-salary').val(val);
             }
         });
     });
