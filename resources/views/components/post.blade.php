@@ -24,6 +24,9 @@
                                 </a>
                             </div>
                         @endisset
+                        <div>
+                            {{ $post->salary }}
+                        </div>
                     </div>
                 </div>
             </div>
