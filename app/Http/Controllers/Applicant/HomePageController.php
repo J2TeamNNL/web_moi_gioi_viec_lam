@@ -65,4 +65,15 @@ class HomePageController extends Controller
             'configs'      => $configs,
         ]);
     }
+
+    public function show($postId)
+    {
+        $post = Post::query()
+            ->with('file')
+            ->find($postId);
+
+        return view('applicant.show', [
+            'post' => $post,
+        ]);
+    }
 }

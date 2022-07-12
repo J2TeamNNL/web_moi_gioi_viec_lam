@@ -4,7 +4,9 @@
             <div class="front truncate" style="min-height: 328.875px;">
                 <div class="card-content">
                     <h5 class="category-social text-success">
-                        <i class="fa fa-newspaper-o"></i> {{ $post->job_title }}
+                        <a href="{{ route('applicant.show', $post) }}">
+                            <i class="fa fa-newspaper-o"></i> {{ $post->job_title }}
+                        </a>
                     </h5>
                     <h4 class="card-title">
                         <a href="#pablo">
