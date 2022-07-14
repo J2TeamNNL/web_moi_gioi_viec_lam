@@ -1,13 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>Register | Hyper - Responsive Bootstrap 4 Admin Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-    <meta content="Coderthemes" name="author" />
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description"/>
+    <meta content="Coderthemes" name="author"/>
     <!-- App favicon -->
     <link rel="shortcut icon" href="assets/images/favicon.ico">
 
@@ -41,58 +40,72 @@
                 <form action="{{ route('registering') }}" method="post">
                     @csrf
                     @auth
-                    <div class="form-group">
-                        <label>Full Name</label>
-                        <input class="form-control" type="text" disabled value="{{ auth()->user()->name }}">
-                    </div>
-                    <div class="form-group">
-                        <label>Email address</label>
-                        <input class="form-control" type="email" disabled value="{{ auth()->user()->email }}">
-                    </div>
-                    <div class="form-group">
-                        <label>Avatar</label>
-                        <img src="{{ auth()->user()->avatar }}" class="rounded-circle" width="32">
-                    </div>
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input class="form-control" type="text" disabled value="{{ auth()->user()->name }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Email address</label>
+                            <input class="form-control" type="email" disabled value="{{ auth()->user()->email }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Avatar</label>
+                            <img src="{{ auth()->user()->avatar }}" class="rounded-circle" width="32">
+                        </div>
                     @endauth
                     @guest
-                    <div class="form-group">
-                        <label for="name">Full Name</label>
-                        <input class="form-control" type="text" id="name" placeholder="Enter your name" required name="name">
-                    </div>
-                    <div class="form-group">
-                        <label for="emailaddress">Email address</label>
-                        <input class="form-control" type="email" id="emailaddress" required placeholder="Enter your email" name="email">
-                    </div>
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input class="form-control" type="text" id="name" placeholder="Enter your name" required
+                                   name="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="emailaddress">Email address</label>
+                            <input class="form-control" type="email" id="emailaddress" required
+                                   placeholder="Enter your email" name="email">
+                        </div>
                     @endguest
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input class="form-control" type="password" required id="password" placeholder="Enter your password" name="password">
+                        <input class="form-control" type="password" required id="password"
+                               placeholder="Enter your password" name="password">
                     </div>
                     <div class="form-group">
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="applicant" name="role" class="custom-control-input" value="1" checked>
-                            <label class="custom-control-label" for="applicant">Applicant</label>
-                        </div>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="hr" name="role" class="custom-control-input" value="2">
-                            <label class="custom-control-label" for="hr">HR</label>
-                        </div>
+                        @foreach($roles as $role => $val)
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input
+                                        type="radio"
+                                        id="{{ $role }}"
+                                        name="role"
+                                        class="custom-control-input"
+                                        value="{{ $val }}"
+                                        checked
+                                >
+                                <label class="custom-control-label" for="{{ $role }}">
+                                    {{ __('frontpage.' . $role) }}
+                                </label>
+                            </div>
+                        @endforeach
                     </div>
                     <div class="form-group">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="checkbox-signup">
-                            <label class="custom-control-label" for="checkbox-signup">I accept <a href="javascript: void(0);" class="text-muted">Terms and Conditions</a></label>
+                            <label class="custom-control-label" for="checkbox-signup">I accept <a
+                                        href="javascript: void(0);" class="text-muted">Terms and Conditions</a></label>
                         </div>
                     </div>
                     <div class="form-group mb-0 text-center">
-                        <button class="btn btn-primary btn-block" type="submit"><i class="mdi mdi-account-circle"></i> Sign Up </button>
+                        <button class="btn btn-primary btn-block" type="submit"><i class="mdi mdi-account-circle"></i>
+                            Sign Up
+                        </button>
                     </div>
                 </form>
                 <!-- end form-->
 
                 <!-- Footer-->
                 <footer class="footer footer-alt">
-                    <p class="text-muted">Already have account? <a href="pages-login-2.html" class="text-muted ml-1"><b>Log In</b></a></p>
+                    <p class="text-muted">Already have account? <a href="pages-login-2.html" class="text-muted ml-1"><b>Log
+                                In</b></a></p>
                 </footer>
 
             </div> <!-- end .card-body -->
@@ -104,7 +117,8 @@
     <div class="auth-fluid-right text-center">
         <div class="auth-user-testimonial">
             <h2 class="mb-3">I love the color!</h2>
-            <p class="lead"><i class="mdi mdi-format-quote-open"></i> It's a elegent templete. I love it very much! . <i class="mdi mdi-format-quote-close"></i>
+            <p class="lead"><i class="mdi mdi-format-quote-open"></i> It's a elegent templete. I love it very much! . <i
+                        class="mdi mdi-format-quote-close"></i>
             </p>
             <p>
                 - Hyper Admin User
