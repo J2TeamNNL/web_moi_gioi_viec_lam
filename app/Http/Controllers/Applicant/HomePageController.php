@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Applicant;
 
+use App\Enums\PostRemotableEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Config;
 use App\Models\Post;
@@ -29,6 +30,8 @@ class HomePageController extends Controller
                     ]);
                 }
             ])
+            ->approved()
+            ->orderByDesc('is_pinned')
             ->orderByDesc('id');
 
         if (!empty($searchCities)) {
@@ -54,15 +57,24 @@ class HomePageController extends Controller
             });
         }
 
+        $remotable = $request->get('remotable');
+        if (!empty($remotable)) {
+            $query->where('remotable', $remotable);
+        }
+
         $posts = $query->paginate();
 
+        $filtersPostRemotable = PostRemotableEnum::getArrWithLowerKey();
+
         return view('applicant.index', [
-            'posts'        => $posts,
-            'arrCity'      => $arrCity,
-            'searchCities' => $searchCities,
-            'minSalary'    => $minSalary,
-            'maxSalary'    => $maxSalary,
-            'configs'      => $configs,
+            'posts'                => $posts,
+            'arrCity'              => $arrCity,
+            'searchCities'         => $searchCities,
+            'minSalary'            => $minSalary,
+            'maxSalary'            => $maxSalary,
+            'configs'              => $configs,
+            'filtersPostRemotable' => $filtersPostRemotable,
+            'remotable'            => $remotable,
         ]);
     }
 
@@ -70,7 +82,8 @@ class HomePageController extends Controller
     {
         $post = Post::query()
             ->with('file')
-            ->find($postId);
+            ->approved()
+            ->findOrFail($postId);
 
         return view('applicant.show', [
             'post' => $post,
