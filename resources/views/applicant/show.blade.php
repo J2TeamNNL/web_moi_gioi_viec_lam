@@ -26,7 +26,6 @@
                                     Private Messages
                                 </li>
                             @endisset
-                            <li><i class="material-icons text-danger">close</i> Personal Brand</li>
                         </ul>
                         <a href="#pablo" class="btn btn-primary btn-round">
                             Get Started

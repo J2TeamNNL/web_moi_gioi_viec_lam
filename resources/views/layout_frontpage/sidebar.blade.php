@@ -13,15 +13,38 @@
                     </a>
                 </h4>
                 <div class="panel panel-default panel-rose">
-                    <div class="panel-heading" role="tab" id="headingOne">
+                    <div class="panel-heading" role="tab" id="tabFilter">
                         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
-                           href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                           href="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
+                            <h4 class="panel-title">Filter</h4>
+                            <i class="material-icons">keyboard_arrow_down</i>
+                        </a>
+                    </div>
+                    <div id="collapseFilter" class="panel-collapse collapse in" role="tabpanel"
+                         aria-labelledby="tabFilter">
+                        <div class="panel-body">
+                            <div class="checkbox">
+                                <select class="form-control" name="remotable">
+                                    @foreach($filtersPostRemotable as $key => $val)
+                                        <option value="{{ $val }}" @if($remotable == $val) selected @endif>
+                                            {{ __('frontpage.' . $key) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default panel-rose">
+                    <div class="panel-heading" role="tab" id="tabPrice">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                           href="#collapsePrice" aria-expanded="false" aria-controls="collapsePrice">
                             <h4 class="panel-title">Price Range</h4>
                             <i class="material-icons">keyboard_arrow_down</i>
                         </a>
                     </div>
-                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
-                         aria-labelledby="headingOne">
+                    <div id="collapsePrice" class="panel-collapse collapse in" role="tabpanel"
+                         aria-labelledby="tabPrice">
                         <input type="hidden" name="min_salary" value="{{ $minSalary }}" id="input-min-salary">
                         <input type="hidden" name="max_salary" value="{{ $maxSalary }}" id="input-max-salary">
                         <div class="panel-body panel-refine">
@@ -39,15 +62,15 @@
                 </div>
 
                 <div class="panel panel-default panel-rose">
-                    <div class="panel-heading" role="tab" id="headingThree">
+                    <div class="panel-heading" role="tab" id="tabLocation">
                         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
-                           href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                           href="#collapseLocation" aria-expanded="false" aria-controls="collapseLocation">
                             <h4 class="panel-title">{{ __('frontpage.location')  }}</h4>
                             <i class="material-icons">keyboard_arrow_down</i>
                         </a>
                     </div>
-                    <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel"
-                         aria-labelledby="headingThree">
+                    <div id="collapseLocation" class="panel-collapse collapse in" role="tabpanel"
+                         aria-labelledby="tabLocation">
                         <div class="panel-body">
                             @foreach($arrCity as $city)
                                 <div class="checkbox">
