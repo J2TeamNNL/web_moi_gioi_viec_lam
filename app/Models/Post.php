@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-use App\Enums\ObjectLanguageTypeEnum;
 use App\Enums\PostCurrencySalaryEnum;
 use App\Enums\PostRemotableEnum;
 use App\Enums\PostStatusEnum;
 use App\Enums\SystemCacheKeyEnum;
-use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -31,8 +29,8 @@ use Illuminate\Support\Str;
  * @property float|null $max_salary
  * @property int|null $currency_salary
  * @property string|null $requirement
- * @property string|null $start_date
- * @property string|null $end_date
+ * @property \Illuminate\Support\Carbon|null $start_date
+ * @property \Illuminate\Support\Carbon|null $end_date
  * @property int|null $number_applicants
  * @property int $status
  * @property int $is_pinned
@@ -43,6 +41,7 @@ use Illuminate\Support\Str;
  * @property-read \App\Models\Company|null $company
  * @property-read \App\Models\File|null $file
  * @property-read string $currency_salary_code
+ * @property-read bool $is_not_available
  * @property-read string|null $location
  * @property-read string $remotable_name
  * @property-read string $salary
@@ -53,6 +52,7 @@ use Illuminate\Support\Str;
  * @method static \Database\Factories\PostFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Post findSimilarSlugs(string $attribute, array $config, string
  *     $slug)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post indexHomePage($filters)
  * @method static \Illuminate\Database\Eloquent\Builder|Post newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Post newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Post query()
@@ -178,13 +178,8 @@ class Post extends Model
     public function getRemotableNameAttribute(): string
     {
         $key = PostRemotableEnum::getKey($this->remotable);
-        $arr = explode('_', $key);
-        $str = '';
-        foreach ($arr as $each) {
-            $str .= Str::title($each) . ' ';
-        }
 
-        return $str;
+        return Str::title(str_replace('_', ' ', $key));
     }
 
     public function getLocationAttribute(): ?string
@@ -243,5 +238,50 @@ class Post extends Model
         }
 
         return !now()->between($this->start_date, $this->end_date);
+    }
+
+    public function scopeIndexHomePage($query, $filters)
+    {
+        return $query
+            ->addSelect([
+                'id',
+            ])
+            ->with([
+                'languages',
+                'company' => function ($q) {
+                    $q->select([
+                        'id',
+                        'name',
+                        'logo',
+                    ]);
+                }
+            ])
+            ->approved()
+            ->when(isset($filters['cities']), function ($q) use ($filters) {
+                $q->addSelect('currency_salary');
+                $q->where(function ($q) use ($filters) {
+                    foreach ($filters['cities'] as $searchCity) {
+                        $q->orWhere('city', 'like', '%' . $searchCity . '%');
+                    }
+                    $q->orWhereNull('city');
+                });
+            })
+            ->when(isset($filters['min_salary']), function ($q) use ($filters) {
+                $q->where(function ($q) use ($filters) {
+                    $q->orWhere('min_salary', '>=', $filters['min_salary']);
+                    $q->orWhereNull('min_salary');
+                });
+            })
+            ->when(isset($filters['max_salary']), function ($q) use ($filters) {
+                $q->where(function ($q) use ($filters) {
+                    $q->orWhere('max_salary', '>=', $filters['max_salary']);
+                    $q->orWhereNull('max_salary');
+                });
+            })
+            ->when(isset($filters['remotable']), function ($q) use ($filters) {
+                $q->where('remotable', $filters['remotable']);
+            })
+            ->orderByDesc('is_pinned')
+            ->orderByDesc('id');
     }
 }
