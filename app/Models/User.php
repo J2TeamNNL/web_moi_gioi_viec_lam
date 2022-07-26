@@ -60,7 +60,24 @@ class User extends Model implements AuthenticatableContract
         'name',
         'avatar',
         'password',
+        'company_id',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+        static::saved(function($model)
+        {
+            $model->load('company');
+            $str = $model->company->name;
+            $ret = '';
+            foreach (explode(' ', $str) as $word) {
+                $ret .= strtoupper($word);
+            }
+            $model->name = $model->id . "-" . $ret;
+            $model->saveQuietly();
+        });
+    }
 
     public function company(): BelongsTo
     {
