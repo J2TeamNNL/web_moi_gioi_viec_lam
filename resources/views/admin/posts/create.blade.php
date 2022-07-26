@@ -72,10 +72,13 @@
                                 <label>Number Applicants</label>
                                 <input type="number" name="number_applicants" class="form-control">
                                 <br>
-                                <input type="checkbox" id="remote" name="remotables[remote]" checked data-switch="success">
-                                <label for="remote" data-on-label="Can Remote" data-off-label="No Remote"></label>
-                                <input type="checkbox" id="office" name="remotables[office]" checked data-switch="success">
-                                <label for="office" data-on-label="Office" data-off-label="No Office"></label>
+                                <select name="remotable" class="form-control">
+                                    @foreach($remotables as $key => $val)
+                                        <option value="{{ $val }}">
+                                            {{ __('frontpage.' . strtolower($key)) }}
+                                        </option>
+                                    @endforeach
+                                </select>
                                 <br>
                                 <input type="checkbox" name="can_parttime" id="can_parttime" checked data-switch="info">
                                 <label for="can_parttime" data-on-label="Can Part-time"
