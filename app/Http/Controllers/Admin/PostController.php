@@ -44,11 +44,13 @@ class PostController extends Controller
 
     public function create()
     {
-        $configs = SystemConfigController::getAndCache();
+        $configs    = SystemConfigController::getAndCache();
+        $remotables = PostRemotableEnum::getArrWithoutAll();
 
         return view('admin.posts.create', [
             'currencies' => $configs['currencies'],
             'countries'  => $configs['countries'],
+            'remotables' => $remotables,
         ]);
     }
 
@@ -67,34 +69,15 @@ class PostController extends Controller
     {
         DB::beginTransaction();
         try {
-            $arr = $request->only([
-                'job_title',
-                'city',
-                "district",
-                "min_salary",
-                "max_salary",
-                "currency_salary",
-                "requirement",
-                "start_date",
-                "end_date",
-                "number_applicants",
-                "slug",
-            ]);
+            $arr = $request->validated();
 
             $companyName = $request->get('company');
 
             if (!empty($companyName)) {
                 $arr['company_id'] = Company::firstOrCreate(['name' => $companyName])->id;
             }
-            if ($request->has('remotables')) {
-                $remotables = $request->get('remotables');
-                if (!empty($remotables['remote']) && !empty($remotables['office'])) {
-                    $arr['remotable'] = PostRemotableEnum::DYNAMIC;
-                } elseif (!empty($remotables['remote'])) {
-                    $arr['remotable'] = PostRemotableEnum::REMOTE_ONLY;
-                } else {
-                    $arr['remotable'] = PostRemotableEnum::OFFICE_ONLY;
-                }
+            if ($request->has('remotable')) {
+                $arr['remotable'] = $request->get('remotable');
             }
             if ($request->has('can_parttime')) {
                 $arr['can_parttime'] = 1;
