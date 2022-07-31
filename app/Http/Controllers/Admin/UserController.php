@@ -32,7 +32,7 @@ class UserController extends Controller
         $query = $this->model->clone()
             ->with('company:id,name')
             ->latest();
-        if (!empty($selectedRole) && $selectedRole !== 'All') {
+        if (!empty($selectedRole) && $selectedRole !== 'All' || $selectedRole == '0') {
             $query->where('role', $selectedRole);
         }
         if (!empty($selectedCity) && $selectedCity !== 'All') {
@@ -43,7 +43,12 @@ class UserController extends Controller
                 return $q->where('id', $selectedCompany);
             });
         }
-        $data = $query->paginate();
+        $data = $query->paginate()
+            ->appends([
+                'role' => $selectedRole,
+                'city' => $selectedCity,
+                'company' => $selectedCompany,
+            ]); //fix
 
         $roles = UserRoleEnum::asArray();
 
