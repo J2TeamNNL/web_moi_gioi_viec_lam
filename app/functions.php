@@ -63,6 +63,9 @@ if (!function_exists('getAndCachePostCities')) {
                     }
                     $arr = explode(', ', $city);
                     foreach ($arr as $item) {
+                        if (empty($item)) {
+                            continue;
+                        }
                         if (in_array($item, $arrCity)) {
                             continue;
                         }
