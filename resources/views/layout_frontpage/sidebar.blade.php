@@ -24,6 +24,7 @@
                          aria-labelledby="tabFilter">
                         <div class="panel-body">
                             <div class="checkbox">
+                                <label>Remoteable</label>
                                 <select class="form-control" name="remotable">
                                     @foreach($filtersPostRemotable as $key => $val)
                                         <option value="{{ $val }}" @if($remotable == $val) selected @endif>
@@ -31,6 +32,21 @@
                                         </option>
                                     @endforeach
                                 </select>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input
+                                            type="checkbox"
+                                            value="1"
+                                            data-toggle="checkbox"
+                                            name="can_parttime"
+                                            @if($searchCanParttime)
+                                                checked
+                                            @endif
+                                    >
+                                    <span class="checkbox-material"><span class="check"></span></span>
+                                    Can Part-time
+                                </label>
                             </div>
                         </div>
                     </div>
