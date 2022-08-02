@@ -24,12 +24,13 @@ class PostController extends Controller
 
     public function index(): JsonResponse
     {
-        $data = $this->model->paginate();
+        $data = $this->model
+            ->latest()
+            ->paginate();
         foreach ($data as $each) {
             $each->currency_salary = $each->currency_salary_code;
             $each->status          = $each->status_name;
         }
-
 
         $arr['data']       = $data->getCollection();
         $arr['pagination'] = $data->linkCollection();
