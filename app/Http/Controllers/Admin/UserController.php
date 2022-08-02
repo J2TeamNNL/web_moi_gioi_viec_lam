@@ -32,18 +32,19 @@ class UserController extends Controller
         $query = $this->model->clone()
             ->with('company:id,name')
             ->latest();
-        if (!empty($selectedRole) && $selectedRole !== 'All') {
+        if (!is_null($selectedRole)) {
             $query->where('role', $selectedRole);
         }
-        if (!empty($selectedCity) && $selectedCity !== 'All') {
+        if (!is_null($selectedCity)) {
             $query->where('city', $selectedCity);
         }
-        if (!empty($selectedCompany) && $selectedCompany !== 'All') {
+        if (!is_null($selectedCompany)) {
             $query->whereHas('company', function ($q) use ($selectedCompany) {
                 return $q->where('id', $selectedCompany);
             });
         }
-        $data = $query->paginate();
+        $data = $query->paginate(1)
+            ->appends($request->all());
 
         $roles = UserRoleEnum::asArray();
 
@@ -56,6 +57,7 @@ class UserController extends Controller
         $cities = $this->model->clone()
             ->distinct()
             ->limit(10)
+            ->whereNotNull('city')
             ->pluck('city');
 
         return view("admin.$this->table.index", [
