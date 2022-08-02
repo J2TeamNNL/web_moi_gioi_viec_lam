@@ -243,9 +243,6 @@ class Post extends Model
     public function scopeIndexHomePage($query, $filters)
     {
         return $query
-            ->addSelect([
-                'id',
-            ])
             ->with([
                 'languages',
                 'company' => function ($q) {
@@ -258,7 +255,6 @@ class Post extends Model
             ])
             ->approved()
             ->when(isset($filters['cities']), function ($q) use ($filters) {
-                $q->addSelect('currency_salary');
                 $q->where(function ($q) use ($filters) {
                     foreach ($filters['cities'] as $searchCity) {
                         $q->orWhere('city', 'like', '%' . $searchCity . '%');
@@ -280,6 +276,9 @@ class Post extends Model
             })
             ->when(isset($filters['remotable']), function ($q) use ($filters) {
                 $q->where('remotable', $filters['remotable']);
+            })
+            ->when(isset($filters['can_parttime']), function ($q) use ($filters) {
+                $q->where('can_parttime', $filters['can_parttime']);
             })
             ->orderByDesc('is_pinned')
             ->orderByDesc('id');
