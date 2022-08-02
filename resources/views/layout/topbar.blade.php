@@ -14,7 +14,7 @@
         <li class="dropdown notification-list topbar-dropdown">
             <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button"
                 aria-haspopup="false" aria-expanded="false">
-                <img src="" alt="user-image" class="mr-0 mr-sm-1" height="12">
+                <img src="{{ asset('flag/us.svg') }}" alt="locale" class="mr-0 mr-sm-1" height="12">
                 <span class="align-middle d-none d-sm-inline-block">English</span> <i
                     class="mdi mdi-chevron-down d-none d-sm-inline-block align-middle"></i>
             </a>
@@ -22,7 +22,7 @@
 
                 <!-- item-->
                 <a href="javascript:void(0);" class="dropdown-item notify-item">
-                    <img src="" alt="user-image" class="mr-1" height="12">
+                    <img src="{{ asset('flag/vn.svg') }}" alt="locale" class="mr-1" height="12">
                     <span class="align-middle">Tiếng Việt</span>
                 </a>
             </div>
@@ -148,7 +148,7 @@
             <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" href="#" role="button"
                 aria-haspopup="false" aria-expanded="false">
                 <span class="account-user-avatar">
-                    <img src="" alt="user-image" class="rounded-circle">
+                    <img src="{{ auth()->user()->avatar }}" alt="user-image" class="rounded-circle">
                 </span>
                 <span>
                     <span class="account-user-name">Dominic Keller</span>

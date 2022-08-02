@@ -16,9 +16,7 @@
                         </a>
                     </h5>
                     <h4 class="card-title">
-                        <a href="#pablo">
-                            {{ $languages }}
-                        </a>
+                        {{ $languages }}
                     </h4>
                     <p class="card-description">
                         {{ $post->location }}
