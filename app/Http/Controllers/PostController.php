@@ -34,6 +34,8 @@ class PostController extends Controller
 
         $arr['data']       = $data->getCollection();
         $arr['pagination'] = $data->linkCollection();
+        $arr['currentPage'] = $data->currentPage();
+        $arr['lastPage'] = $data->lastPage();
 
         return $this->successResponse($arr);
     }
