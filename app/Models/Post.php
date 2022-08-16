@@ -90,6 +90,7 @@ class Post extends Model
     protected $fillable = [
         'company_id',
         'job_title',
+        'levels',
         'city',
         'status',
         "district",
