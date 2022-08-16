@@ -57,7 +57,10 @@ class PostController extends Controller
     public function importCsv(Request $request): JsonResponse
     {
         try {
-            Excel::import(new PostImport(), $request->file('file'));
+            $levels = $request->input('levels');
+            $file   = $request->file('file');
+
+            Excel::import(new PostImport($levels), $file);
 
             return $this->successResponse();
         } catch (Throwable $e) {
