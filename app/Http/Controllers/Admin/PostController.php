@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\ObjectLanguageTypeEnum;
 use App\Enums\PostCurrencySalaryEnum;
+use App\Enums\PostLevelEnum;
 use App\Enums\PostRemotableEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ResponseTrait;
@@ -39,7 +40,11 @@ class PostController extends Controller
 
     public function index()
     {
-        return view('admin.posts.index');
+        $levels = PostLevelEnum::asArray();
+
+        return view('admin.posts.index', [
+            'levels' => $levels,
+        ]);
     }
 
     public function create()
