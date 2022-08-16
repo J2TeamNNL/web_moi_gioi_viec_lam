@@ -194,6 +194,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.js"></script>
     <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
     <script>
+        {{-- ($levels - $city) $languages - $company --}}
         function generateTitle() {
             let languages = [];
             $("#select-language :selected").map(function (i, v) {

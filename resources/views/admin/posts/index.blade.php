@@ -7,11 +7,10 @@
                     <a href="{{ route('admin.posts.create') }}" class="btn btn-primary">
                         Create
                     </a>
-                    <label for="csv" class="btn btn-info mb-0">
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalCSV">
                         Import CSV
-                    </label>
-                    <input type="file" name="csv" id="csv" class="d-none"
-                           accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                    </button>
+
                     <nav class="float-right">
                         <ul class="pagination pagination-rounded mb-0" id="pagination">
                         </ul>
@@ -39,15 +38,57 @@
             </div>
         </div>
     </div>
+    <div id="modalCSV" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Import CSV</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body form-horizontal">
+                    <div class="form-group">
+                        <label>Levels</label>
+                        <select class="form-control" multiple id="levels">
+                            @foreach($levels as $option => $val)
+                                <option value="{{ $val }}">
+                                    {{ ucwords(strtolower($option)) }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>File</label>
+                        <input
+                                type="file"
+                                name="csv"
+                                id="csv"
+                                class="form-control"
+                                accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-success" id="btn-import-csv">
+                            Import
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 @endsection
 @push('js')
     <script>
         $(document).ready(function () {
+            $('select').select2();
             // crawl data
             $.ajax({
                 url: '{{ route('api.posts') }}',
                 dataType: 'json',
-                data: {page: {{ request()->get('page') ?? 1 }} },
+                data: {page: {{ request()->get('page') ?? 1 }}},
                 success: function (response) {
                     response.data.data.forEach(function (each) {
                         let location = each.district + ' - ' + each.city;
@@ -91,9 +132,10 @@
                 window.location.search = urlParams;
             });
 
-            $("#csv").change(function () {
-                var formData = new FormData();
-                formData.append('file', $(this)[0].files[0]);
+            $("#btn-import-csv").click(function () {
+                let formData = new FormData();
+                formData.append('file', $('#csv')[0].files[0]);
+                formData.append('levels', $('#levels').val());
                 $.ajax({
                     url: '{{ route('admin.posts.import_csv') }}',
                     type: 'POST',
