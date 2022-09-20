@@ -28,5 +28,6 @@ Route::get('/language/{locale}', function ($locale) {
 
     session()->put('locale', $locale);
 
-    return redirect()->back();
+
+    return redirect()->back()->withCookie(cookie('locale', $locale, 60 * 24 * 30));
 })->name('language');
