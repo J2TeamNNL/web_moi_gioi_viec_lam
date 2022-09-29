@@ -85,6 +85,7 @@
         $(document).ready(function () {
             $('select').select2();
             // crawl data
+            var cPage;
             $.ajax({
                 url: '{{ route('api.posts') }}',
                 dataType: 'json',
@@ -112,6 +113,13 @@
                         );
                     });
                     renderPagination(response.data.pagination);
+                    cPage = response.data.currentPage;
+                    if(cPage == 1) {
+                        $(".pagination li:first-child").addClass("disabled");
+                    }
+                    if(cPage == response.data.lastPage) {
+                        $(".pagination li:last-child").addClass("disabled");
+                    }
                 },
                 error: function (response) {
                     $.toast({
@@ -126,7 +134,15 @@
 
             $(document).on('click', '#pagination > li > a', function (event) {
                 event.preventDefault();
-                let page = $(this).text();
+                var page;
+                if($(this).text().trim() === 'Next »'){
+                     page = cPage + 1;
+
+                }else if ($(this).text().trim() === '« Previous') {
+                     page = cPage - 1;
+                }else {
+                     page = $(this).text();
+                };
                 let urlParams = new URLSearchParams(window.location.search);
                 urlParams.set('page', page);
                 window.location.search = urlParams;

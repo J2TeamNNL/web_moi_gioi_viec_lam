@@ -5,3 +5,6 @@
 .navbar-custom{
     max-height: 70px;
 }
+.disabled{
+    pointer-events: none;
+}
